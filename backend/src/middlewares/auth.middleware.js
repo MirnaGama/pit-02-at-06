@@ -1,7 +1,13 @@
 const {verify} = require('jsonwebtoken')
 
+const publicRoutes = ["api/auth"];
+
 const authMiddleware = (req, res, next) => {
     const {authorization} = req.headers;
+
+    if (publicRoutes.includes(req.url) || req.url === "api/user" && req.method === "POST") {
+        return next();
+    }
 
     try {
         if (!authorization) {

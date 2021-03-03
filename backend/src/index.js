@@ -11,6 +11,7 @@ require('dotenv').config()
 const {HTTP_PORT, MONGO_URL} = process.env;
 
 const UserRouter = require("./routes/user.router");
+const TodoRouter = require("./routes/todo.router");
 
 mongoose.connect(MONGO_URL, {
   useNewUrlParser: true,
@@ -29,6 +30,7 @@ app.get("/", (request, response) => {
 });
 
 app.use("/api", UserRouter);
+app.use("/api", TodoRouter);
 
 app.listen(HTTP_PORT, () => {
   console.log(`Rodando na porta ${HTTP_PORT}`);
