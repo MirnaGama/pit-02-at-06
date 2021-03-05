@@ -25,9 +25,10 @@ export default function login({ history }) {
     event.preventDefault();
 
     try {
-      const response = await api.get('/api/user/auth', form);
+      console.log(form);
+      const response = await api.post('/api/auth', form);
       localStorage.setItem('token', response.data.token);
-
+      toast.info('Logged');
       // redirecionamento
       history.push('/todo');
     } catch (e) {

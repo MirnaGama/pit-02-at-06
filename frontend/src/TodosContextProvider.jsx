@@ -9,7 +9,7 @@ const TodosContextProvider = ({ children }) => {
 
   const fetchTodos = async () => {
     try {
-      const response = await axios.get('/todo',
+      const response = await axios.get('/api/todo',
         {
           headers: {
             Authorization: `Bearer ${token}`,
