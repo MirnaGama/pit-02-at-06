@@ -5,11 +5,17 @@ import axios from './utils/api';
 
 const TodosContextProvider = ({ children }) => {
   const [todos, setTodos] = useState([]);
+  const token = window.localStorage.getItem('token');
 
   const fetchTodos = async () => {
     try {
-      const response = await axios.get('/todo');
-      setTodos(response.data);
+      const response = await axios.get('/todo',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      setTodos(response.data.data);
     } catch (e) {
       toast.error(e.message);
     }

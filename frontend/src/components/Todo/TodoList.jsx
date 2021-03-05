@@ -9,6 +9,7 @@ import TodosContext from '../../TodosContext';
 
 const TodoList = () => {
   const [todos, setTodos] = useContext(TodosContext);
+  const token = window.localStorage.getItem('token');
 
   const onCompleteTodo = async ({ target: { checked } }, todo) => {
     const newTodos = todos.map((_todo) => {
@@ -24,6 +25,11 @@ const TodoList = () => {
     await axios.put(`/todo/${todo.id}`, {
       ...todo,
       completed: checked,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     setTodos(newTodos);
@@ -32,7 +38,12 @@ const TodoList = () => {
   const onRemoveTodo = async (todo) => {
     const newTodos = todos.filter(({ id }) => id !== todo.id);
 
-    await axios.delete(`/todo/${todo.id}`);
+    await axios.delete(`/todo/${todo.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
     toast.info(`Todo [${todo.title}] removed`);
 
@@ -74,6 +85,11 @@ const TodoList = () => {
       await axios.put(`/todo/${todo.id}`, {
         ...todo,
         edit: false,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       onEditTodo(todo);

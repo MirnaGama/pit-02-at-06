@@ -7,12 +7,24 @@ import User from './pages/User';
 import EditUser from './pages/User/edit-user';
 import Todos from './pages/Todos';
 import Todo from './pages/Todos/Todo';
+import Cadastro from './pages/Cadastro';
+import Login from './pages/Login';
 
 const routes = [
   {
     path: '/',
     component: Index,
     name: 'Home',
+  },
+  {
+    path: '/login',
+    component: Login,
+    name: 'Login',
+  },
+  {
+    path: '/cadastro',
+    component: Cadastro,
+    name: 'Cadastro',
   },
   {
     path: '/todo',

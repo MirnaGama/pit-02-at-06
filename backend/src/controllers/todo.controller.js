@@ -1,73 +1,73 @@
 const TodoModel = require("../models/todo.model");
 
 class TodoController {
-
-    async getOne(req, res) {
-        const { id } = req.params;
+  async index(req, res) {
+    const {
+      headers: {
+        loggedUser: { _id: userId },
+      },
+    } = req;
     
-        try {
-          const todo = await TodoModel.findById(id);
-          res.send({ todo });
-        } catch (e) {
-          res.status(400).send({ message: "Todo not exists" });
-        }
-      }
+    const data = await TodoModel.find({ userId });
 
-      async index(req, res) {
-        const data = await TodoModel.find();
-    
-        res.send({ data });
-      }
+    res.send({ data });
+  }
 
-    async getAllByUser(req, res) {
-        const { _id } = req.headers.loggedUser
+  async store(req, res) {
+    const {
+      body: data,
+      headers: {
+        loggedUser: { _id: userId },
+      },
+    } = req;
 
-        try {
-            const todos = await TodoModel.find({userId: _id}).exec(); // TESTAR DEPOIS
-            res.send({todos})    
-        } catch (e) {
-            res.status(400).send({ message: "Error occurred"});
-        }
+    data.userId = userId;
+
+    const newTodo = await TodoModel.create(data);
+
+    res.send({ data: newTodo });
+  }
+
+  async getOne(req, res) {
+    const { id } = req.params;
+
+    try {
+      const data = await TodoModel.findById(id);
+      res.send({ data });
+    } catch (e) {
+      res.status(400).send({ message: "Todo not exists" });
     }
+  }
 
-      async store(req, res) {
-        let data = req.body;
-    
-        const { _id } = req.headers.loggedUser
-        data = {... data, userId: _id};
+  async update(req, res) {
+    const {
+      params: { id },
+      body,
+    } = req;
 
-        const newTodo = await TodoModel.create(data);
-    
-        res.send({ todo: newTodo });
+    const todo = await TodoModel.findOneAndUpdate(id, body).lean();
+
+    res.send({
+      data: {
+        ...todo,
+        ...body,
+      },
+    });
+  }
+
+  async remove(req, res) {
+    const { id } = req.params;
+
+    try {
+      const todo = await TodoModel.findByIdAndDelete(id);
+      if (todo) {
+        res.send({ message: "Todo removed" });
       }
-
-      async update(req, res) {
-        const {
-          params: { id },
-          body,
-        } = req;
-    
-        const todo = await TodoModel.findOneAndUpdate(id, body).lean();
-    
-        res.send({
-          todo: {
-            ...todo,
-            ...body,
-          },
-        });
-      }
-
-      async remove(req, res) {
-        const { id } = req.params;
-    
-        try {
-          const todo = await TodoModel.findByIdAndDelete(id);
-          if (todo) {
-            res.send({ message: "Todo removed" });
-          }
-          throw new Error("Todo not exist");
-        } catch (error) {
-          res.status(400).send({ message: error.message });
-        }
-      }
+      throw new Error("Todo not exist");
+    } catch (error) {
+      res.status(400).send({ message: error.message });
+    }
+  }
 }
+
+module.exports = new TodoController();

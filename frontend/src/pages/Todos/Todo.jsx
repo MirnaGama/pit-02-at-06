@@ -8,10 +8,16 @@ import Card from '../../components/Card';
 export default function Todo() {
   const { id } = useParams();
   const [todo, setTodo] = useState({});
+  const token = window.localStorage.getItem('token');
 
   const fetchTodo = async () => {
     try {
-      const response = await axios.get(`/todo/${id}`);
+      const response = await axios.get(`/todo/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
       setTodo(response.data);
     } catch (e) {
       toast.error(e.message);

@@ -20,7 +20,13 @@ export default function TodoForm() {
     };
 
     try {
-      const response = await axios.post('/todo', data);
+      const token = window.localStorage.getItem('token');
+      const response = await axios.post('/todo', data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
       toast(`Todo [${text}], created !`);
       setTodos([...todos, response.data]);
       setText('');
