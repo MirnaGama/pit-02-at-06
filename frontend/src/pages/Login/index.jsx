@@ -25,7 +25,6 @@ export default function login({ history }) {
     event.preventDefault();
 
     try {
-      console.log(form);
       const response = await api.post('/api/auth', form);
       localStorage.setItem('token', response.data.token);
       toast.info('Logged');

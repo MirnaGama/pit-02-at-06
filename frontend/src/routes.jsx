@@ -9,22 +9,41 @@ import Todos from './pages/Todos';
 import Todo from './pages/Todos/Todo';
 import Cadastro from './pages/Cadastro';
 import Login from './pages/Login';
+import SignOut from './pages/SignOut';
 
-const routes = [
+const isLogged = () => {
+  const token = window.localStorage.getItem('token');
+
+  if (token != null) {
+    const r = [
+      {
+        path: '/signout',
+        component: SignOut,
+        name: 'Sign out',
+      },
+    ];
+    return r;
+  }
+  const r = [
+    {
+      path: '/login',
+      component: Login,
+      name: 'Login',
+    },
+    {
+      path: '/cadastro',
+      component: Cadastro,
+      name: 'Cadastro',
+    },
+  ];
+  return r;
+};
+
+let routes = [
   {
     path: '/',
     component: Index,
     name: 'Home',
-  },
-  {
-    path: '/login',
-    component: Login,
-    name: 'Login',
-  },
-  {
-    path: '/cadastro',
-    component: Cadastro,
-    name: 'Cadastro',
   },
   {
     path: '/todo',
@@ -50,20 +69,24 @@ const routes = [
   },
 ];
 
-const Routes = () => (
-  <BrowserRouter>
-    <Header title="Pitang 2" routes={routes} />
-    <Switch>
-      {routes.map(({ component, path }) => (
-        <Route
-          exact
-          key={path}
-          path={path}
-          component={component}
-        />
-      ))}
-    </Switch>
-  </BrowserRouter>
-);
+const Routes = () => {
+  const extraRoutes = isLogged();
+  routes = [...routes, ...extraRoutes];
+  return (
+    <BrowserRouter>
+      <Header title="Pitang 2" routes={routes} />
+      <Switch>
+        {routes.map(({ component, path }) => (
+          <Route
+            exact
+            key={path}
+            path={path}
+            component={component}
+          />
+        ))}
+      </Switch>
+    </BrowserRouter>
+  );
+};
 
 export default Routes;
