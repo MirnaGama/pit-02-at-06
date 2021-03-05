@@ -18,8 +18,8 @@ export default function TableComponent({ columns = [], rows = [] }) {
             {columns.map((column) => (
               <td key={column.id}>
                 {
-                column.render ? column.render(row[column.id], row) : row[column.id]
-              }
+                  column.render ? column.render(row[column.id], row) : row[column.id]
+                }
               </td>
             ))}
           </tr>

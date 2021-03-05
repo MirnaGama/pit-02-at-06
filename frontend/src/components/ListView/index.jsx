@@ -38,8 +38,10 @@ export default function index({
               <span className="sr-only">Loading...</span>
             </Spinner>
           ) : (
-            <Table columns={columns} rows={rows} />
-          )}
+              // eslint-disable-next-line react/jsx-indent
+              <Table columns={columns} rows={rows} />
+              // eslint-disable-next-line indent
+            )}
         </div>
       </Card>
     </Container>

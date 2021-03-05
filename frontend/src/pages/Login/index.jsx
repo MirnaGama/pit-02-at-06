@@ -39,26 +39,26 @@ export default function login({ history }) {
     <Container className="mt-5">
       <Card title="Login">
         <Form onSubmit={onSubmit}>
-        <Form.Group>
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            name="email"
-            type="email"
-            value={form.email}
-            onChange={onChange}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            name="password"
-            type="password"
-            value={form.password}
-            onChange={onChange}
-          />
-        </Form.Group>
+          <Form.Group>
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              name="email"
+              type="email"
+              value={form.email}
+              onChange={onChange}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              name="password"
+              type="password"
+              value={form.password}
+              onChange={onChange}
+            />
+          </Form.Group>
 
-        <Button type="submit">Login</Button>
+          <Button type="submit">Login</Button>
         </Form>
       </Card>
     </Container>

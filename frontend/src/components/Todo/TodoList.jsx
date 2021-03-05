@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-closing-tag-location */
+/* eslint-disable indent */
 import React, { useContext } from 'react';
 import {
   Row, Button, Table,
@@ -26,11 +28,11 @@ const TodoList = () => {
       ...todo,
       completed: checked,
     },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
     setTodos(newTodos);
   };
@@ -86,11 +88,11 @@ const TodoList = () => {
         ...todo,
         edit: false,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
       onEditTodo(todo);
     } else {
@@ -128,10 +130,11 @@ const TodoList = () => {
                     onChange={(event) => onChangeTodo(event, index)}
                   />
                 ) : (
-                  <Link to={`/todo/${todo.id}`} className={todo.completed ? 'completed' : ''}>
-                    {todo.title}
-                  </Link>
-                )}
+                    // eslint-disable-next-line react/jsx-indent
+                    <Link to={`/todo/${todo.id}`} className={todo.completed ? 'completed' : ''}>
+                      {todo.title}
+                    </Link>
+                  )}
 
               </td>
               <td>
@@ -146,12 +149,13 @@ const TodoList = () => {
               </td>
             </tr>
           )) : (
-            <tr>
-              <td colSpan={3} align="center">
-                No Data Found
-              </td>
-            </tr>
-          )}
+              // eslint-disable-next-line react/jsx-indent
+              <tr>
+                <td colSpan={3} align="center">
+                  No Data Found
+                </td>
+              </tr>
+            )}
         </tbody>
       </Table>
     </Row>

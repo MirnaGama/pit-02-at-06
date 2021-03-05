@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import Card from '../../components/Card';
 import api from '../../utils/api';
 
-export default function cadastro({ history }) {
+export default function cadastro() {
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -25,9 +25,11 @@ export default function cadastro({ history }) {
     event.preventDefault();
 
     try {
+      console.log(form);
       await api.post('/api/user', form);
       // redirecionamento
-      history.push('/todo');
+      // history.push('/todo');
+      toast.info('User created success');
     } catch (e) {
       toast.error(e.message);
     }
@@ -37,35 +39,35 @@ export default function cadastro({ history }) {
     <Container className="mt-5">
       <Card title="Cadastro">
         <Form onSubmit={onSubmit}>
-        <Form.Group>
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            name="name"
-            type="text"
-            value={form.name}
-            onChange={onChange}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            name="email"
-            type="email"
-            value={form.email}
-            onChange={onChange}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            name="password"
-            type="password"
-            value={form.password}
-            onChange={onChange}
-          />
-        </Form.Group>
+          <Form.Group>
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              name="name"
+              type="text"
+              value={form.name}
+              onChange={onChange}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              name="email"
+              type="email"
+              value={form.email}
+              onChange={onChange}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              name="password"
+              type="password"
+              value={form.password}
+              onChange={onChange}
+            />
+          </Form.Group>
 
-        <Button type="submit">Login</Button>
+          <Button type="submit">Login</Button>
         </Form>
       </Card>
     </Container>
